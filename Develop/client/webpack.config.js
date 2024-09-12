@@ -5,33 +5,33 @@ const { InjectManifest } = require('workbox-webpack-plugin');
 
 module.exports = () => {
   return {
-    mode: 'development',
+    mode: 'production',  // Set mode to production
     entry: {
       main: './src/js/index.js',
-      install: './src/js/install.js',
+      install: './src/js/install.js'
     },
     output: {
       filename: '[name].bundle.js',
       path: path.resolve(__dirname, 'dist'),
     },
     plugins: [
-      // Generates an HTML file from a template
+      // Generates HTML file
       new HtmlWebpackPlugin({
-        template: './index.html',
-        title: 'Just Another Text Editor',
+        template: './src/index.html',
+        title: 'Text Editor PWA',
       }),
 
-      // Injects the custom service worker
+      // Injects service worker
       new InjectManifest({
         swSrc: './src-sw.js',
         swDest: 'src-sw.js',
       }),
 
-      // Generates a manifest.json file for PWA
+      // Generates manifest.json for PWA
       new WebpackPwaManifest({
-        name: 'J.A.T.E',
-        short_name: 'JATE',
-        description: 'Just Another Text Editor!',
+        name: 'Text Editor PWA',
+        short_name: 'TextEditor',
+        description: 'A simple text editor PWA!',
         background_color: '#ffffff',
         theme_color: '#31a2ac',
         start_url: './',
@@ -47,12 +47,10 @@ module.exports = () => {
     ],
     module: {
       rules: [
-        // CSS loaders to handle importing CSS files
         {
           test: /\.css$/i,
           use: ['style-loader', 'css-loader'],
         },
-        // Babel loader to transpile ES6+ JavaScript
         {
           test: /\.m?js$/,
           exclude: /node_modules/,
